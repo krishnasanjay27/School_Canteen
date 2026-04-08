@@ -9,6 +9,7 @@ import { SnacksPage } from './pages/SnacksPage'
 import { StudentsPage } from './pages/StudentsPage'
 import { CreateStudentPage } from './pages/CreateStudentPage'
 import { StudentDetailPage } from './pages/StudentDetailPage'
+import { ToastProvider } from './components/ToastProvider'
 
 // Seed on app boot (no-op if data already exists)
 seedInitialData()
@@ -31,6 +32,7 @@ export default function App() {
             <OrderModal />
           </div>
         </BrowserRouter>
+        <ToastProvider />
       </ModalProvider>
     </QueryClientProvider>
   )

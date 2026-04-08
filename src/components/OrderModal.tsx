@@ -15,22 +15,27 @@ export function OrderModal() {
   const [studentId, setStudentId] = useState('')
   const [snackId, setSnackId] = useState('')
   const [quantity, setQuantity] = useState(1)
-  const [successMsg, setSuccessMsg] = useState('')
   const [formError, setFormError] = useState('')
 
   const closeRef = useRef<HTMLButtonElement>(null)
   const modalRef = useRef<HTMLDivElement>(null)
+  const previousFocusRef = useRef<HTMLElement | null>(null)
 
   // Reset form when modal opens
   useEffect(() => {
     if (isOpen) {
+      previousFocusRef.current = document.activeElement as HTMLElement
       setStudentId(selectedStudent?.id ?? '')
       setSnackId(selectedSnack?.id ?? '')
       setQuantity(1)
-      setSuccessMsg('')
       setFormError('')
       // Focus close button on open
       setTimeout(() => closeRef.current?.focus(), 50)
+    } else {
+      if (previousFocusRef.current) {
+        previousFocusRef.current.focus()
+        previousFocusRef.current = null
+      }
     }
   }, [isOpen, selectedSnack, selectedStudent])
 
@@ -73,8 +78,7 @@ export function OrderModal() {
       { studentId, snackId, quantity, amount },
       {
         onSuccess: () => {
-          setSuccessMsg('Order placed successfully!')
-          setTimeout(() => closeModal(), 1400)
+          closeModal()
         },
         onError: () => {
           setFormError('Failed to place order. Please try again.')
@@ -121,17 +125,8 @@ export function OrderModal() {
 
         {/* Body */}
         <div className="space-y-4 px-5 py-4">
-          {successMsg ? (
-            <div className="flex items-center gap-2 rounded border border-green-200 bg-green-50 px-4 py-3">
-              <svg className="h-5 w-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-              <p className="text-sm font-medium text-green-800">{successMsg}</p>
-            </div>
-          ) : (
-            <>
-              {/* Snack selector — shown only if no snack pre-selected */}
-              {!selectedSnack && (
+          {/* Snack selector — shown only if no snack pre-selected */}
+          {!selectedSnack && (
                 <div className="flex flex-col gap-1">
                   <label htmlFor="modal-snack" className="text-sm font-medium text-gray-700">
                     Snack <span className="text-red-500" aria-hidden="true">*</span>
@@ -212,28 +207,24 @@ export function OrderModal() {
               {formError && (
                 <p className="text-sm text-red-600" role="alert">{formError}</p>
               )}
-            </>
-          )}
         </div>
 
         {/* Footer */}
-        {!successMsg && (
-          <div className="flex justify-end gap-2 border-t border-gray-200 px-5 py-4">
-            <Button variant="secondary" size="md" onClick={closeModal}>
-              Cancel
-            </Button>
-            <Button
-              variant="primary"
-              size="md"
-              loading={createOrder.isPending}
-              onClick={handleSubmit}
-              disabled={createOrder.isPending}
-              aria-label="Confirm order"
-            >
-              Confirm Order
-            </Button>
-          </div>
-        )}
+        <div className="flex justify-end gap-2 border-t border-gray-200 px-5 py-4">
+          <Button variant="secondary" size="md" onClick={closeModal}>
+            Cancel
+          </Button>
+          <Button
+            variant="primary"
+            size="md"
+            loading={createOrder.isPending}
+            onClick={handleSubmit}
+            disabled={createOrder.isPending}
+            aria-label="Confirm order"
+          >
+            Confirm Order
+          </Button>
+        </div>
       </div>
     </div>
   )

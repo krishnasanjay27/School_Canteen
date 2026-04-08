@@ -19,7 +19,7 @@ export function SnackCard({ snack }: SnackCardProps) {
           <span className="mr-1 inline-block rounded bg-gray-100 px-1.5 py-0.5 font-medium text-gray-600">
             {snack.ordersCount}
           </span>
-          {snack.ordersCount === 1 ? 'order' : 'orders'} placed
+          {snack.ordersCount === 1 ? 'order' : 'orders'} 
         </p>
       </div>
       <Button

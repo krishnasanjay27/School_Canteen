@@ -1,7 +1,15 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { getOrdersByStudentId, createOrder } from '../services/orderService'
-import { addRecentOrder } from '../services/recentOrdersService'
+import { addRecentOrder, getRecentOrders } from '../services/recentOrdersService'
 import { CreateOrderPayload, Snack, Student } from '../types'
+import toast from 'react-hot-toast'
+
+export function useRecentOrders() {
+  return useQuery({
+    queryKey: ['recentOrders'],
+    queryFn: () => Promise.resolve(getRecentOrders()),
+  })
+}
 
 export function useOrdersByStudent(studentId: string) {
   return useQuery({
@@ -51,6 +59,7 @@ export function useCreateOrder() {
     },
 
     onError: (_err, payload, context) => {
+      toast.error('Failed to place order. Please try again.')
       if (context?.prevSnacks) queryClient.setQueryData(['snacks'], context.prevSnacks)
       if (context?.prevStudents) queryClient.setQueryData(['students'], context.prevStudents)
       if (context?.prevStudent)
@@ -59,6 +68,7 @@ export function useCreateOrder() {
 
     onSuccess: (newOrder) => {
       addRecentOrder(newOrder)
+      toast.success('Order placed successfully')
     },
 
     onSettled: (_data, _error, payload) => {
@@ -66,6 +76,7 @@ export function useCreateOrder() {
       queryClient.invalidateQueries({ queryKey: ['students'] })
       queryClient.invalidateQueries({ queryKey: ['student', payload.studentId] })
       queryClient.invalidateQueries({ queryKey: ['orders', payload.studentId] })
+      queryClient.invalidateQueries({ queryKey: ['recentOrders'] })
     },
   })
 }

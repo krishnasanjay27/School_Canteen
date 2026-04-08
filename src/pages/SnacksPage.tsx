@@ -3,6 +3,7 @@ import { SnackCard } from '../components/SnackCard'
 import { Loader } from '../components/Loader'
 import { ErrorState } from '../components/ErrorState'
 import { EmptyState } from '../components/EmptyState'
+import { RecentOrders } from '../components/RecentOrders'
 
 export function SnacksPage() {
   const { data: snacks, isLoading, isError, refetch } = useSnacks()
@@ -18,6 +19,8 @@ export function SnacksPage() {
           Browse available snacks and place an order.
         </p>
       </div>
+
+      <RecentOrders />
 
       {!snacks || snacks.length === 0 ? (
         <EmptyState
