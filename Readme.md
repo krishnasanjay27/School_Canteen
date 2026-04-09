@@ -79,27 +79,6 @@ npm run build
 npm run preview
 ```
 
----
 
-## Deployment
 
-This app has **no backend dependency**. It works entirely from localStorage.
 
-### Vercel
-
-1. Push to GitHub/GitLab
-2. Import repo in [vercel.com](https://vercel.com)
-3. Framework preset: **Vite**
-4. Build command: `npm run build`
-5. Output directory: `dist`
-6. Click Deploy ✓
-
-### Netlify
-
-1. Push to GitHub/GitLab
-2. New site → Import from Git
-3. Build command: `npm run build`
-4. Publish directory: `dist`
-5. Click Deploy ✓
-
-No environment variables required.

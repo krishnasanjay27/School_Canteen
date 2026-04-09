@@ -1,12 +1,14 @@
 # Prompts Used
 
-This document records the prompts used to guide the AI-assisted development of the School Canteen Ordering System.
-
+This document records selected prompts used to assist with scaffolding,
+refinement, and UI improvements during development. The overall architecture,
+feature decisions, and integration logic were implemented iteratively during
+the build process.
 ---
 
 ## Prompt 1 — Initial Project Scaffold
 
-> Build a production-deployable frontend web application using React + TypeScript + Vite + TailwindCSS.
+> Generate an initial scaffold for a production-ready frontend architecture using React + TypeScript + Vite + TailwindCSS.
 > Project: School Canteen Ordering System. Features: Snacks page, Students page, Student Detail page, Create Student page. Use localStorage persistence. Use React Query, React Hook Form, Context API. Follow scalable folder architecture. Clean dashboard-style UI.
 
 **Outcome:** Complete project structure with all layers (services, hooks, context, components, pages), seeded with 6 snacks.
@@ -15,7 +17,7 @@ This document records the prompts used to guide the AI-assisted development of t
 
 ## Prompt 2 — Production Refinements
 
-> Improve with: responsive design (Tailwind breakpoints), recent orders localStorage service, optimistic UI updates with rollback, QueryClient separation, accessibility (aria-modal, focus trap, ESC close), retry in ErrorState, README, and PROMPTS_USED docs.
+> Improve the application with responsive layout adjustments (Tailwind breakpoints), recent orders persistence using localStorage, optimistic UI updates with rollback support, QueryClient configuration separation, accessibility improvements (aria-modal usage, focus trap, ESC close behavior), and retry support in the ErrorState component
 
 **Outcome:** All refinements applied cleanly on top of the existing architecture without restructuring.
 
