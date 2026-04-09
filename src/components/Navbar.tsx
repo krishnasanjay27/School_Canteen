@@ -18,6 +18,7 @@ export function Navbar() {
             <NavLink
               key={item.to}
               to={item.to}
+              end
               className={({ isActive }) =>
                 [
                   'rounded px-3 py-1.5 text-sm font-medium transition-colors',
